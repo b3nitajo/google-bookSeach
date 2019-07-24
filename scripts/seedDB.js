@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const db = require("../models");
 
 mongoose.connect(
-  "mongodb://localhost/googlebooks", 
-  { useNewUrlParser: true }
+  // "mongodb://localhost/googlebooks", 
+  // { useNewUrlParser: true }
 
- // process.env.MONGODB_URI ||
-// "mongodb://localhost/reactreadinglist"
+  process.env.MONGODB_URI ||
+ "mongodb://localhost/googlebooks"
 );
 
 const bookSeed = [
