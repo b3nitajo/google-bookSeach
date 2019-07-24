@@ -30,9 +30,11 @@ class Books extends Component {
               <h1>What Books Should I Read?</h1>
             </Jumbotron>
             <form>
-              <Input name="title" placeholder="Title (required)" />
-              <Input name="author" placeholder="Author (required)" />
-              <TextArea name="synopsis" placeholder="Synopsis (Optional)" />
+              <Input name="title" placeholder="Title*" />
+              <Input name="author" placeholder="Author*" />
+              <TextArea name="description" placeholder="Description" />
+              <Input name="image" placeholder="bookcover.jpg" />
+              <Input name="link" placeholder="http://booklink.com" />
               <FormBtn>Submit Book</FormBtn>
             </form>
           </Col>
