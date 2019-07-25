@@ -8,18 +8,45 @@ import { Input, TextArea, FormBtn } from "../components/Form";
 
 class Books extends Component {
   state = {
-    books: []
+    books: [],
+    title: "",
+    author: "",
+    description: "",
+    image: "",
+    link: ""
   };
 
-  removeBook = id => {
-    API.deleteBook(id)
-      .then(res => this.setState({ books: res.data }))
-      .catch(err => console.log(err));
-  };
+  // removeBook = id => {
+  //   API.deleteBook(id)
+  //     .then(res => this.setState({ books: res.data }))
+  //     .catch(err => console.log(err));
+  // };
 
   componentDidMount() {
     this.loadBooks();
   }
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+    if (this.state.title && this.state.author) {
+      API.saveBook({
+        title: this.state.title,
+        author: this.state.author,
+        description: this.state.description,
+        image: this.state.image,
+        link: this.state.link
+      })
+        .then(res => this.loadBooks())
+        .catch(err => console.log(err));
+    }
+  };
 
   loadBooks = () => {
     API.getBooks()
@@ -42,12 +69,12 @@ class Books extends Component {
               <h1>What Books Should I Read?</h1>
             </Jumbotron>
             <form>
-              <Input name="title" placeholder="Title*" />
-              <Input name="author" placeholder="Author*" />
-              <TextArea name="description" placeholder="Description" />
-              <Input name="image" placeholder="bookcover.jpg" />
-              <Input name="link" placeholder="http://booklink.com" />
-              <FormBtn>Submit Book</FormBtn>
+              <Input value={this.state.title} onChange={this.handleInputChange} name="title" placeholder="Title*" />
+              <Input value={this.state.author} onChange={this.handleInputChange} name="author" placeholder="Author*" />
+              <TextArea value={this.state.description} onChange={this.handleInputChange}  name="description" placeholder="Description" />
+              <Input value={this.state.image} onChange={this.handleInputChange} name="image" placeholder="bookcover.jpg" />
+              <Input value={this.state.link} onChange={this.handleInputChange} name="link" placeholder="http://booklink.com" />
+              <FormBtn onClick={this.handleFormSubmit} >Submit Book</FormBtn>
             </form>
           </Col>
           <Col size="md-6 sm-12">
