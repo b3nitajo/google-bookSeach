@@ -1,13 +1,12 @@
 import React from "react";
 import "./style.css";
 
-// The ...props means, spread all of the passed props onto this element
-// That way we don't have to define them all individually
+// ...props dynamically spreads passed props onto element
+// instead of defining separately
 function DeleteBtn(props) {
   return (
-   // <span lassName="delete-btn" {...props} role="button" tabIndex="0">
-   <span className="delete-btn" onClick={() => props.removeBook(props.id)}>
-     ✗
+  <span className="delete-btn" {...props} role="button" tabIndex="0">
+   ✗
     </span>
   );
 }
