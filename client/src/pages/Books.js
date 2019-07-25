@@ -11,13 +11,13 @@ class Books extends Component {
     books: []
   };
 
-  //removeBook = (id) => {
-   // API.deleteBook(id)
-    //  .then(res => this.setState({ books: res.data }))
-     // .catch(err => console.log(err));
-  removeBook = id => { 
+  removeBook = id => {
+    //API.deleteBook(id);
+     // .then(res => this.setState({ books: res.data }))
+   //   .catch(err => console.log(err));
+ // removeBook = (id) => { 
     // Filter this.state.books for books with an id not equal to the id being removed
-    const books = this.state.books.filter(book => book._id !== id);
+    const books = this.state.books.filter(book => book.id !== id);
     // Set this.state.books equal to the new books array
     this.setState({ books });
   };
@@ -62,7 +62,7 @@ class Books extends Component {
                         {book.title} by {book.author}
                       </strong>
                     </a>
-                    <DeleteBtn removeBook={this.removeBook} />
+                    <DeleteBtn removeBook={this.removeBook}/>
                   </ListItem>
                 ))}
               </List>
