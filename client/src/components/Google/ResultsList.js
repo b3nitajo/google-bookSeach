@@ -3,9 +3,9 @@ import React from "react";
 function ResultList(props) {
   return (
     <ul className="list-group">
-      {props.results.map(result => (
-        <li className="list-group-item" key={result.id}>
-          <img alt={result.title} className="img-fluid" src={result.images.original.url} />
+      {props.googleBooks.map(googleBooks => (
+        <li className="list-group-item" key={googleBooks.id}>
+          <img alt={googleBooks.title} className="img-fluid" src={googleBooks.images.original.url} />
         </li>
       ))}
     </ul>

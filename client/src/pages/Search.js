@@ -1,22 +1,29 @@
 import React, { Component } from "react";
-import SearchForm from "./SearchForm";
-import ResultsList from "./ResultsList";
+import SearchForm from "../components/SearchForm";
+import ResultsList from "../components/ResultsList";
 import GOOGLEAPI from "../utils/GOOGLEAPI";
+import API from "../utils/API";
 
 class Search extends Component {
   state = {
+    googleBooks: {},
     search: "",
-    googleBooks: []
+    savedBook: {}
   };
 
-  // When this component mounts, search the Giphy API for pictures of kittens
   componentDidMount() {
     this.searchBooks("art");
   }
 
   searchBooks = query => {
     GOOGLEAPI.search(query)
-      .then(res => this.setState({ googleBooks: res.data.data }))
+      .then(res => this.setState({ googleBooks: res.data }))
+      .catch(err => console.log(err));
+  };
+
+  savedBook = query => {
+    GOOGLEAPI.save(query)
+      .then(res => this.setState({ savedBook: res.data }))
       .catch(err => console.log(err));
   };
 
@@ -28,11 +35,42 @@ class Search extends Component {
     });
   };
 
-  // When the form is submitted, search the Giphy API for `this.state.search`
   handleFormSubmit = event => {
     event.preventDefault();
     this.searchBooks(this.state.search);
   };
+
+  handleSaveSubmit = event => {
+    event.preventDefault();
+      this.savedBook(this.state.save);
+      API.saveBook({
+        title: this.state.title,
+        author: this.state.authors,
+        description: this.state.description,
+        image: this.state.image,
+        link: this.state.link
+      })
+  };
+  deleteBook = id => {
+    API.deleteBook(id)
+      .then(res => this.loadBooks())
+      .catch(err => console.log(err));
+  };
+
+  // handleSaveSubmit = event => {
+  //   event.preventDefault();
+  //     API.saveBook({
+  //       title: this.state.title,
+  //       author: this.state.authors,
+  //       description: this.state.description,
+  //       image: this.state.image,
+  //       link: this.state.link
+  //     })
+  //       .then(res => this.loadBooks())
+  //       .catch(err => console.log(err));
+  // };
+  
+
 
   render() {
     return (
@@ -47,7 +85,7 @@ class Search extends Component {
               handleFormSubmit={this.handleFormSubmit}
               handleInputChange={this.handleInputChange}
             />
-            <ResultsList results={this.state.results} />
+            <ResultsList googleBooks={this.state.googleBooks} />
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
