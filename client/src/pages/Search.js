@@ -1,48 +1,37 @@
 import React, { Component } from "react";
-import Jumbotron from "../components/Jumbotron";
+import SearchForm from "./SearchForm";
+import ResultsList from "./ResultsList";
 import GOOGLEAPI from "../utils/GOOGLEAPI";
-import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/Results";
-import { Input, FormBtn } from "../components/Search";
 
 class Search extends Component {
   state = {
-    books: [],
-    title: "",
-    author: "",
-    description: "",
-    image: "",
-    link: ""
+    search: "",
+    googleBooks: []
   };
 
+  // When this component mounts, search the Giphy API for pictures of kittens
   componentDidMount() {
-    this.loadBooks();
+    this.searchBooks("art");
   }
 
+  searchBooks = query => {
+    GOOGLEAPI.search(query)
+      .then(res => this.setState({ googleBooks: res.data.data }))
+      .catch(err => console.log(err));
+  };
+
   handleInputChange = event => {
-    const { name, value } = event.target;
+    const name = event.target.name;
+    const value = event.target.value;
     this.setState({
       [name]: value
     });
   };
 
+  // When the form is submitted, search the Giphy API for `this.state.search`
   handleFormSubmit = event => {
     event.preventDefault();
-      GOOGLEAPI.searchBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
-  };
-
-  loadBooks = () => {
-    GOOGLEAPI.getBooks()
-      .then(res => this.setState({ books: res.data }))
-      .catch(err => console.log(err));
-  };
-
-  deleteBook = id => {
-    GOOGLEAPI.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
+    this.searchBooks(this.state.search);
   };
 
   render() {
@@ -53,10 +42,12 @@ class Search extends Component {
             <Jumbotron>
               <h1>Search Google Books</h1>
             </Jumbotron>
-            <form>
-              <Input value={this.state.googleSearch} onChange={this.handleInputChange} name="googleSearch" placeholder="Search by keyword, Author, or name" />
-              <FormBtn onClick={this.handleFormSubmit} >Search </FormBtn>
-            </form>
+            <SearchForm
+              search={this.state.search}
+              handleFormSubmit={this.handleFormSubmit}
+              handleInputChange={this.handleInputChange}
+            />
+            <ResultsList results={this.state.results} />
           </Col>
           <Col size="md-6 sm-12">
             <Jumbotron>
