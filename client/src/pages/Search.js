@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import SearchForm from "../components/Google/SearchForm";
-//import ResultsList from "../components/Google/ResultsList";
+import { ResultsList, ResListItem } from "../components/Google/ResultsList";
 import GOOGLEAPI from "../utils/GOOGLEAPI";
 //import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
+//import { List, ListItem } from "../components/List";
 import Jumbotron from "../components/Jumbotron";
 import SelectBtn from "../components/SelectBtn";
 
@@ -68,6 +68,7 @@ class Search extends Component {
 
   savedBook = query => {
     GOOGLEAPI.save(query)
+   // this.savedBook(this.state.save);
       .then(res => this.setState({ savedBook: res.data }))
       .catch(err => console.log(err));
   };
@@ -124,19 +125,19 @@ class Search extends Component {
               <h1>Search Results</h1>
             </Jumbotron>
             {this.state.googleBooks.length ? (
-              <List>
-                {this.state.googleBooks.map(items => (
-                  <ListItem key={items.id}>
+              <ResultsList>
+              {this.state.googleBooks.map(res => (
+                  <ResListItem key={res.id}>
                     <strong>
-                        {items.volumeInfo.title} by {items.volumeInfo.authors}
+                        {res.volumeInfo.title} by {res.volumeInfo.authors}
                     </strong>
                     <strong>
-                      Description:  {items.volumeInfo.description}
+                      Description:  {res.volumeInfo.description}
                      </strong>
-                    <SelectBtn onClick={() => this.saveBook(items.id)}/>
-                  </ListItem>
+                    <SelectBtn onClick={() => this.saveBook(res.id)}/>
+                  </ResListItem>
                 ))}
-              </List>
+              </ResultsList>
             ) : (
               <h3>No Results to Display</h3>
             )}
