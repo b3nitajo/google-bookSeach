@@ -23,42 +23,20 @@ class Search extends Component {
 
   componentDidMount() {
     this.searchBooks("art");
-    // this.googleBooks(
-    //   {
-    //     kind: "books/volume",
-    //     totalItems: 2343,
-    //     items:
-    //       [
-    //         {
-    //         id: "1",
-    //         volumeInfo:
-    //           {  
-    //             title: "title 1",
-    //             author: "author 1",  
-    //             description: "Description 1"
-    //           }
-    //         },
-    //         {
-    //         id: "2",
-    //         volumeInfo:
-    //           {  
-    //             title: "title 2",
-    //             author: "author 2",  
-    //             description: "Description 2"
-    //           }
-    //         }
-    //       ]
-    //     }
-   // );
-    //   title: ""
-    // });
   };
 
   searchBooks = query => {
     GOOGLEAPI.search(query)
-      .then(res => this.setState({ googleBooks: res.data }))
-      .catch(err => console.log(err));
-  };
+      .then(res =>{
+        const results = res.data.items;
+        console.log(results);
+        this.setState({googleBooks: results})
+      })
+      .catch(err => console.log(err))
+      //const results = res.data.items
+      //map results 
+    //can set results object data here too or in render
+  }
 
   // loadResults = (query) => {
   //   GOOGLEAPI.search(query)
@@ -91,18 +69,23 @@ class Search extends Component {
       this.savedBook(this.state.save);
   };
   
-  // handleSaveSubmit = event => {
-  //   event.preventDefault();
-  //     API.saveBook({
-  //       title: this.state.title,
-  //       author: this.state.authors,
-  //       description: this.state.description,
-  //       image: this.state.image,
-  //       link: this.state.link
-  //     })
-  //       .then(res => this.loadBooks())
-  //       .catch(err => console.log(err));
-  // };
+  saveBook = (id) => {
+    GOOGLEAPI.search(id)
+      .then(res =>{
+        const results = res.data.items;
+        console.log(results);
+       // const data = results.json();
+      //  API.saveBook(data);
+        // API.saveBook({
+        //   title: results.volumeInfo.title,
+        //   author: results.volumeInfo.authors,
+        //   description: results.volumeInfo.description,
+        //   image: results.imageLinks.thumbnail,
+        //   link: results.selfLink
+        // })
+      })
+      .catch(err => console.log(err));
+  };
   
 
 
@@ -129,11 +112,16 @@ class Search extends Component {
               {this.state.googleBooks.map(res => (
                   <ResListItem key={res.id}>
                     <strong>
-                        {res.volumeInfo.title} by {res.volumeInfo.authors}
+                      {res.volumeInfo.title} 
+                      <br></br>
                     </strong>
+                      by {res.volumeInfo.authors} 
+                      <br></br>
                     <strong>
-                      Description:  {res.volumeInfo.description}
-                     </strong>
+                      Description: <nbsp></nbsp>
+                    </strong>  
+                      {res.volumeInfo.description}
+                    
                     <SelectBtn onClick={() => this.saveBook(res.id)}/>
                   </ResListItem>
                 ))}

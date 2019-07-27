@@ -10,12 +10,14 @@ export default {
   // Get User's choice from Google Books
   //then save the book to database
   save: function(query) {
-    async function fetchBook(query) {
-      const res = await fetch(SAVEURL + query);
-      const data = await res.json();
-      return axios.post("/api/books", data); 
-    }
-    fetchBook(query);
+  //  return axios.get(SAVEURL + query);
+   async function fetchBook(query) {
+     const res = await fetch(SAVEURL + query);
+     const data = await res.json();
+     return axios.post("/api/books", data); 
+   }
+   fetchBook(query);
+   console.log(fetchBook(query));
   }
   
 };
