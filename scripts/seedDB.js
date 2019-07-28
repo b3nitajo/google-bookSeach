@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 const db = require("../models");
 
 mongoose.connect(
-  // "mongodb://localhost/googlebooks", 
-  // { useNewUrlParser: true }
-
   process.env.MONGODB_URI ||
  "mongodb://localhost/googlebooks"
 );
