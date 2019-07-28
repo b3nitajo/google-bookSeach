@@ -1,5 +1,5 @@
 {
-  "name": "google-booksearch",
+  "name": "savensearch-books",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -26,5 +26,6 @@
     "if-env": "^1.0.4",
     "mongodb": "^3.3.0-beta2",
     "mongoose": "^5.3.16"
-  }
+  },
+  "homepage": " https://savensearch-books.herokuapp.com"
 }
