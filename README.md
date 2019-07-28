@@ -6,8 +6,6 @@ An app where users can search and save books from Google Books Collection and al
 
 equires you to create React components, work with helper/util functions, and utilize React lifecycle methods to query and display books based on user searches. You'll also use Node, Express and MongoDB so that users can save books to review or purchase later.
 
-
-
 # How it works?
 Save n Search is a MERN application built using NodeJS, MongoDB, Express, React, Google Books API and Bootstrap CSS Framework. 
 
