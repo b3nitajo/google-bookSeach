@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASEURL = "https://www.googleapis.com/books/v1/volumes?q=";
-const SAVEURL = "https://www.googleapis.com/books/v1/volumes/";
+const BASEURL = "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/books/v1/volumes?q=";
+const SAVEURL = "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/books/v1/volumes/";
 
 export default {
   search: function(query) {
