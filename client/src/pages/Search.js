@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SearchForm from "../components/Google/SearchForm";
 import { ResultsList, ResListItem } from "../components/Google/ResultsList";
 import GOOGLEAPI from "../utils/GOOGLEAPI";
-//import API from "../utils/API";
+import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 //import { List, ListItem } from "../components/List";
 import Jumbotron from "../components/Jumbotron";
@@ -70,11 +70,24 @@ class Search extends Component {
   };
   
   saveBook = (id) => {
-    GOOGLEAPI.search(id)
-      .then(res =>{
-        const results = res.data.items;
-        console.log(results);
-       // const data = results.json();
+    GOOGLEAPI.save(id)
+       .then(res =>{
+         async function bookData (){
+         const results = await res.data;
+         const savedTA = {
+           title: results.volumeInfo.title,
+           author: results.volumeInfo.authors.join(', '),
+           description: results.volumeInfo.description,
+           image: results.volumeInfo.imageLinks.thumbnail,
+           link: results.selfLink
+         }
+         console.log(res);
+         console.log(results);
+         console.log(savedTA);
+         API.saveBook(savedTA);
+         }
+         bookData();
+      //  // const data = results.json();
       //  API.saveBook(data);
         // API.saveBook({
         //   title: results.volumeInfo.title,
@@ -82,9 +95,9 @@ class Search extends Component {
         //   description: results.volumeInfo.description,
         //   image: results.imageLinks.thumbnail,
         //   link: results.selfLink
-        // })
-      })
-      .catch(err => console.log(err));
+      //   // })
+       })
+       .catch(err => console.log(err));
   };
   
 
