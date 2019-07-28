@@ -4,7 +4,6 @@ import { ResultsList, ResListItem } from "../components/Google/ResultsList";
 import GOOGLEAPI from "../utils/GOOGLEAPI";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
-//import { List, ListItem } from "../components/List";
 import Jumbotron from "../components/Jumbotron";
 import SelectBtn from "../components/SelectBtn";
 
@@ -13,7 +12,6 @@ class Search extends Component {
   state = {
     googleBooks: {},
     search: "",
-    savedBook: {},
     title: "",
     author: "",
     description: "",
@@ -33,23 +31,7 @@ class Search extends Component {
         this.setState({googleBooks: results})
       })
       .catch(err => console.log(err))
-      //const results = res.data.items
-      //map results 
-    //can set results object data here too or in render
-  }
-
-  // loadResults = (query) => {
-  //   GOOGLEAPI.search(query)
-  //     .then(res => this.setState({ googleBooks: res.data }))
-  //     .catch(err => console.log(err));
-  // };
-
-  savedBook = query => {
-    GOOGLEAPI.save(query)
-   // this.savedBook(this.state.save);
-      .then(res => this.setState({ savedBook: res.data }))
-      .catch(err => console.log(err));
-  };
+     }
 
   handleInputChange = event => {
     const name = event.target.name;
@@ -64,11 +46,6 @@ class Search extends Component {
     this.searchBooks(this.state.search);
   };
 
-  handleSaveSubmit = event => {
-    event.preventDefault();
-      this.savedBook(this.state.save);
-  };
-  
   saveBook = (id) => {
     GOOGLEAPI.save(id)
        .then(res =>{
@@ -79,7 +56,7 @@ class Search extends Component {
            author: results.volumeInfo.authors.join(', '),
            description: results.volumeInfo.description,
            image: results.volumeInfo.imageLinks.thumbnail,
-           link: results.selfLink
+           link: results.volumeInfo.previewLink
          }
          console.log(res);
          console.log(results);
@@ -87,21 +64,10 @@ class Search extends Component {
          API.saveBook(savedTA);
          }
          bookData();
-      //  // const data = results.json();
-      //  API.saveBook(data);
-        // API.saveBook({
-        //   title: results.volumeInfo.title,
-        //   author: results.volumeInfo.authors,
-        //   description: results.volumeInfo.description,
-        //   image: results.imageLinks.thumbnail,
-        //   link: results.selfLink
-      //   // })
        })
        .catch(err => console.log(err));
   };
   
-
-
   render() {
     return (
       <Container fluid>
@@ -119,6 +85,7 @@ class Search extends Component {
           <Col size="md-6 sm-12">
             <Jumbotron>
               <h1>Search Results</h1>
+              <h3>(Select Save to add Book details to <a href="/save">Reading List</a>)</h3>
             </Jumbotron>
             {this.state.googleBooks.length ? (
               <ResultsList>
@@ -134,6 +101,10 @@ class Search extends Component {
                       Description: <nbsp></nbsp>
                     </strong>  
                       {res.volumeInfo.description}
+                      <br></br>
+                    <img src={res.volumeInfo.imageLinks.thumbnail} alt="book"></img>
+                    <br></br>
+                    <a href={res.volumeInfo.previewLink} target="blank">View Book Details</a>
                     
                     <SelectBtn onClick={() => this.saveBook(res.id)}/>
                   </ResListItem>

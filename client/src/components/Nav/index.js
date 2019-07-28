@@ -5,7 +5,6 @@ function Nav() {
     <React.Fragment>
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <a className="navbar-brand" href="/">
-        Google Book Search
       </a>
       <a className="navbar-brand" href="/search">
         Search
