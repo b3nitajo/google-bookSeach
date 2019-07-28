@@ -87,13 +87,11 @@ class Books extends Component {
             {this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <a href="">
+                  <ListItem key={book._id}> 
                       <strong>
                         {book.title} 
                       </strong>
                       <br></br>
-                    </a>
                     by {book.author}
                     <br></br>
                     Description {book.description}
