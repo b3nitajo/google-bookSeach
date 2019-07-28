@@ -12,10 +12,15 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Serve up static assets to heroku
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 // Routes
 app.use(routes);
 
-// Serve up static assets to heroku
+
 if (process.env.NODE_ENV === "production") {
   app.get("*", (_, res) => {
     res.sendFile(path.join(__dirname, "/client/build/index.html"));
