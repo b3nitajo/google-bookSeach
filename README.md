@@ -1,7 +1,7 @@
-![GitHub Logo](/images/readMe_header.png)
+![GitHub Logo](/images/readMe_Header.png)
 
 # Welcome to Save N Search
-## Create custom reading list on the go! 
+Create custom reading list on the go! 
 
 # What is Save N Search?
 Save N Search is a MERN web application designed for users who love to read. Search for your next book club idea or keep track of **"Up Next"** Novels all in one place. 
